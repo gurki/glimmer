@@ -1,8 +1,8 @@
 cmake_minimum_required( VERSION 3.28 )
 
-project( chronos-examples
+project( glimmer-examples
     VERSION 1.0.0
-    DESCRIPTION "chronos examples"
+    DESCRIPTION "glimmer examples"
     LANGUAGES CXX
 )
 
@@ -12,5 +12,5 @@ add_executable( ${PROJECT_NAME}
 
 target_link_libraries( ${PROJECT_NAME} 
     PUBLIC
-        chronos
+        glimmer
 )

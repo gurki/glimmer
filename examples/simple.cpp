@@ -1,4 +1,4 @@
-#include <chronos/chronos.h>
+#include <glimmer/glimmer.h>
 
 #include <print>
 #include <chrono>
@@ -9,38 +9,38 @@ using namespace std::chrono_literals;
 
 struct Functor
 {
-    float fun() {
-        CHRONOS_GUARD;
+    float exec() {
+        GLIMMER_GUARD;
         std::this_thread::sleep_for( 2ms );
         return 1.f;
     }
 };
 
 void workerA() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     std::this_thread::sleep_for( 10ms );
 }
 
 void workerB() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     std::this_thread::sleep_for( 1ms );
 }
 
 void workerC() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     workerA();
     std::this_thread::sleep_for( 2ms );
 }
 
 void workerD() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     Functor fn;
-    fn.fun();
+    fn.exec();
     std::this_thread::sleep_for( 2ms );
 }
 
 void workerE() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     workerC();
     workerD();
     std::this_thread::sleep_for( 10ms );
@@ -49,7 +49,7 @@ void workerE() {
 
 int main( int argc, char* argv[] )
 {
-    CHRONOS_BEGIN;
+    GLIMMER_BEGIN;
 
     workerA();
     workerC();
@@ -57,7 +57,6 @@ int main( int argc, char* argv[] )
     workerE();
 
     std::async( workerB ).wait();
-
     std::vector< std::future<void> > futures;
 
     for ( int i = 0; i < 10; i++ ) {
@@ -73,6 +72,6 @@ int main( int argc, char* argv[] )
         f.wait();
     }
 
-    CHRONOS_END;
-    chronos::dumpStackCollapse( CHRONOS, "out.txt" );
+    GLIMMER_END;
+    glimmer::dumpStackCollapse( GLIMMER, "out.txt" );
 }

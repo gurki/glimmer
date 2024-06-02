@@ -8,7 +8,7 @@
 #include <format>
 #include <filesystem>
 
-namespace chronos {
+namespace glimmer {
 
 
 struct Scope 
@@ -22,17 +22,17 @@ struct Scope
 };
 
 
-}   //  ::chronos
+}   //  ::glimmer
 
 
 template<>
-struct std::formatter<chronos::Scope> 
+struct std::formatter<glimmer::Scope> 
 {
     constexpr auto parse( std::format_parse_context& ctx ) { 
         return ctx.begin(); 
     }
 
-    auto format( const chronos::Scope& scope, std::format_context& ctx )  const
+    auto format( const glimmer::Scope& scope, std::format_context& ctx )  const
     {
         const auto dt = scope.end - scope.start;
         const auto durationMs = std::chrono::duration_cast<std::chrono::microseconds>( dt );

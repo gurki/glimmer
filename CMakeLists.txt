@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.28 )
 
-project( chronos
+project( glimmer
     VERSION 1.0.0
     DESCRIPTION "A tiny cpp flame graph profiling library"
     LANGUAGES CXX
@@ -16,7 +16,7 @@ add_library( ${PROJECT_NAME} STATIC
 )
 
 if ( ENABLE_DEFINES ) 
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC CHRONOS_DEFINES )
+    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_DEFINES )
 endif()
 
 target_compile_features( ${PROJECT_NAME} PUBLIC 

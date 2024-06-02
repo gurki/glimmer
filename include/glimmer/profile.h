@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <source_location>
 
-namespace chronos {
+namespace glimmer {
 
 
 class Scope;
@@ -39,4 +39,4 @@ class Profile
 };
 
 
-}   //  ::chronos
+}   //  ::glimmer

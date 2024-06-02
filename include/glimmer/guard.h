@@ -2,7 +2,7 @@
 
 #include <source_location>
 
-namespace chronos {
+namespace glimmer {
 
 
 struct Guard {

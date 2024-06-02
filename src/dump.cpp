@@ -1,10 +1,11 @@
-#include "chronos/dump.h"
-#include "chronos/chronos.h"
+#include "glimmer/dump.h"
+#include "glimmer/profile.h"
+#include "glimmer/scope.h"
 
 #include <fstream>
 #include <format>
 
-namespace chronos {
+namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,4 +57,4 @@ void dumpStackCollapse(
 }
 
 
-}   //  ::chronos
+}   //  ::glimmer

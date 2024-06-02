@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace chronos {
+namespace glimmer {
 
 
 class Profile;
@@ -13,4 +13,4 @@ void dumpStackCollapse(
 );
 
 
-}   //  ::chronos
+}   //  ::glimmer

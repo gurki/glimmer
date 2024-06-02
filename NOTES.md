@@ -1,3 +1,9 @@
+## naming
+- chronos ⏱
+- pyro 🔥
+- glimmer 🔥
+
+## std::stacktrace
 using stacktrace directly causes annoying lambdas to be no good at all
 
 ```

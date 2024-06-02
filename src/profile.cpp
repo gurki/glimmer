@@ -1,7 +1,7 @@
-#include "chronos/profile.h"
-#include "chronos/scope.h"
+#include "glimmer/profile.h"
+#include "glimmer/scope.h"
 
-namespace chronos {
+namespace glimmer {
 
 
 std::unique_ptr<Profile> Profile::instance_ = nullptr;
@@ -71,4 +71,4 @@ void Profile::endScope()
 }
 
 
-}   //  ::chronos
+}   //  ::glimmer

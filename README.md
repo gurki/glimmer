@@ -1,4 +1,4 @@
-# chronos ⌚
+# glimmer 🔥
 A tiny cpp flame graph profiling library
 
 
@@ -17,23 +17,23 @@ Shoutout Brendan Gregg and Jamie Wong for building kool stuff.
 
 ## Usage
 ```cpp
-#include <chronos/chronos.h>
+#include <glimmer/glimmer.h>
 #include <future>
 
 void worker() {
-    CHRONOS_GUARD;
+    GLIMMER_GUARD;
     std::this_thread::sleep_for( std::chrono::milliseconds( 10 ) );
 }
 
 int main( int argc, char* argv[] ) 
 {
-    CHRONOS_BEGIN;
+    GLIMMER_BEGIN;
 
     worker();
     std::async( worker ).wait();
 
-    CHRONOS_END;
-    chronos::dumpStackCollapse( CHRONOS, "out.txt" );
+    GLIMMER_END;
+    glimmer::dumpStackCollapse( GLIMMER, "out.txt" );
 }
 ```
 

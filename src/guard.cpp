@@ -1,7 +1,7 @@
-#include "chronos/guard.h"
-#include "chronos/profile.h"
+#include "glimmer/guard.h"
+#include "glimmer/profile.h"
 
-namespace chronos {
+namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,4 +16,4 @@ Guard::~Guard() {
 }
 
 
-}   //  ::chronos
+}   //  ::glimmer
