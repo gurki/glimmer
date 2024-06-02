@@ -79,7 +79,7 @@
 	// show
 	window.addEventListener("mouseover", function(e) {
 		var target = find_group(e.target);
-		if (target) details.nodeValue = "Function: " + g_to_text(target);
+		if (target) details.nodeValue = " " + g_to_text(target);
 	}, false)
 
 	// clear
@@ -422,7 +422,7 @@
 ]]>
 </script>
 <rect x="0.0" y="0" width="1200.0" height="134.0" fill="url(#background)"  />
-<text id="title" x="600.00" y="24" >Flame Graph</text>
+<text id="title" x="600.00" y="24" >out.txt</text>
 <text id="details" x="10.00" y="117" > </text>
 <text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
 <text id="search" x="1090.00" y="24" >Search</text>
@@ -430,27 +430,27 @@
 <text id="matched" x="1090.00" y="117" > </text>
 <g id="frames">
 <g >
-<title>all (56,051 samples, 100%)</title><rect x="10.0" y="85" width="1180.0" height="15.0" fill="rgb(213,39,9)" rx="2" ry="2" />
-<text  x="13.00" y="95.5" ></text>
-</g>
-<g >
-<title>main (40,345 samples, 71.98%)</title><rect x="340.6" y="53" width="849.4" height="15.0" fill="rgb(243,179,42)" rx="2" ry="2" />
-<text  x="343.65" y="63.5" >main</text>
-</g>
-<g >
-<title>7524 (40,345 samples, 71.98%)</title><rect x="340.6" y="69" width="849.4" height="15.0" fill="rgb(206,9,2)" rx="2" ry="2" />
+<title>7524 (40,345 us, 71.98%)</title><rect x="340.6" y="69" width="849.4" height="15.0" fill="rgb(202,53,53)" rx="2" ry="2" />
 <text  x="343.65" y="79.5" >7524</text>
 </g>
 <g >
-<title>worker (15,706 samples, 28.02%)</title><rect x="10.0" y="53" width="330.6" height="15.0" fill="rgb(211,28,6)" rx="2" ry="2" />
-<text  x="13.00" y="63.5" >worker</text>
+<title>main (40,345 us, 71.98%)</title><rect x="340.6" y="53" width="849.4" height="15.0" fill="rgb(242,112,112)" rx="2" ry="2" />
+<text  x="343.65" y="63.5" >main</text>
 </g>
 <g >
-<title>1872 (15,706 samples, 28.02%)</title><rect x="10.0" y="69" width="330.6" height="15.0" fill="rgb(206,9,2)" rx="2" ry="2" />
+<title>1872 (15,706 us, 28.02%)</title><rect x="10.0" y="69" width="330.6" height="15.0" fill="rgb(202,53,53)" rx="2" ry="2" />
 <text  x="13.00" y="79.5" >1872</text>
 </g>
 <g >
-<title>worker (12,166 samples, 21.71%)</title><rect x="933.9" y="37" width="256.1" height="15.0" fill="rgb(211,28,6)" rx="2" ry="2" />
+<title>all (56,051 us, 100%)</title><rect x="10.0" y="85" width="1180.0" height="15.0" fill="rgb(209,63,63)" rx="2" ry="2" />
+<text  x="13.00" y="95.5" ></text>
+</g>
+<g >
+<title>worker (15,706 us, 28.02%)</title><rect x="10.0" y="53" width="330.6" height="15.0" fill="rgb(206,60,60)" rx="2" ry="2" />
+<text  x="13.00" y="63.5" >worker</text>
+</g>
+<g >
+<title>worker (12,166 us, 21.71%)</title><rect x="933.9" y="37" width="256.1" height="15.0" fill="rgb(206,60,60)" rx="2" ry="2" />
 <text  x="936.88" y="47.5" >worker</text>
 </g>
 </g>
