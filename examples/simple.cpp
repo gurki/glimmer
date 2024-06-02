@@ -1,17 +1,77 @@
 #include <chronos/chronos.h>
+
+#include <print>
+#include <chrono>
 #include <future>
 
-void worker() {
+using namespace std::chrono_literals;
+
+
+struct Functor
+{
+    float fun() {
+        CHRONOS_GUARD;
+        std::this_thread::sleep_for( 2ms );
+        return 1.f;
+    }
+};
+
+void workerA() {
     CHRONOS_GUARD;
-    std::this_thread::sleep_for( std::chrono::milliseconds( 10 ) );
+    std::this_thread::sleep_for( 10ms );
 }
 
-int main( int argc, char* argv[] ) 
+void workerB() {
+    CHRONOS_GUARD;
+    std::this_thread::sleep_for( 1ms );
+}
+
+void workerC() {
+    CHRONOS_GUARD;
+    workerA();
+    std::this_thread::sleep_for( 2ms );
+}
+
+void workerD() {
+    CHRONOS_GUARD;
+    Functor fn;
+    fn.fun();
+    std::this_thread::sleep_for( 2ms );
+}
+
+void workerE() {
+    CHRONOS_GUARD;
+    workerC();
+    workerD();
+    std::this_thread::sleep_for( 10ms );
+}
+
+
+int main( int argc, char* argv[] )
 {
     CHRONOS_BEGIN;
 
-    worker();
-    std::async( worker ).wait();
+    workerA();
+    workerC();
+    workerD();
+    workerE();
+
+    std::async( workerB ).wait();
+
+    std::vector< std::future<void> > futures;
+
+    for ( int i = 0; i < 10; i++ ) {
+        auto futureA = std::async( workerA );
+        futures.emplace_back( std::move( futureA ) );
+    }
+
+    for ( int i = 0; i < 5; i++ ) {
+        workerB();
+    }
+
+    for ( auto& f : futures ) {
+        f.wait();
+    }
 
     CHRONOS_END;
     chronos::dumpStackCollapse( CHRONOS, "out.txt" );

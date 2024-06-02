@@ -30,9 +30,7 @@ int main( int argc, char* argv[] )
     CHRONOS_BEGIN;
 
     worker();
-
-    const auto future = std::async( worker );
-    future.wait();
+    std::async( worker ).wait();
 
     CHRONOS_END;
     chronos::dumpStackCollapse( CHRONOS, "out.txt" );
@@ -45,3 +43,5 @@ int main( int argc, char* argv[] )
 7524;main;worker 12166
 1872;worker 15706
 ```
+
+![](docs/out.svg)
