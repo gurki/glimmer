@@ -22,7 +22,7 @@ void workerA() {
 }
 
 void workerB() {
-    GLIMMER_GUARD;
+    GLIMMER_NGUARD( "second worker");
     std::this_thread::sleep_for( 1ms );
 }
 
@@ -33,7 +33,7 @@ void workerC() {
 }
 
 void workerD() {
-    GLIMMER_GUARD;
+    GLIMMER_NGUARD( "another named guard");
     Functor fn;
     fn.exec();
     std::this_thread::sleep_for( 2ms );

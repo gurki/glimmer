@@ -15,7 +15,11 @@ class Profile
     public:
 
         Profile();
-        void beginScope( const std::source_location source = std::source_location::current() );
+        
+        void beginScope( 
+            const std::string& name = {}, 
+            const std::source_location source = std::source_location::current() 
+        );
         void endScope();
 
         const auto& start() const { return start_; }
@@ -26,8 +30,8 @@ class Profile
     private:
 
         std::chrono::system_clock::time_point start_;
-        std::vector<Scope> scopes_;
         std::unordered_map<std::thread::id, int> levels_;
+        std::vector<Scope> scopes_;
 
         std::mutex mutex_;
         

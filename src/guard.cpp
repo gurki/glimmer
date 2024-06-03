@@ -5,8 +5,11 @@ namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Guard::Guard( const std::source_location source ) {
-    Profile::instance().beginScope( source );
+Guard::Guard( 
+    const std::string& name, 
+    const std::source_location source ) 
+{
+    Profile::instance().beginScope( name, source );
 }
 
 

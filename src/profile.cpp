@@ -25,11 +25,14 @@ Profile& Profile::instance()
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Profile::beginScope( const std::source_location source )
+void Profile::beginScope( 
+    const std::string& name, 
+    const std::source_location source )
 {
     const auto thread = std::this_thread::get_id();
 
     Scope scope;
+    scope.name = name;
     scope.source = source;
     scope.thread = thread;
     scope.start = std::chrono::system_clock::now();

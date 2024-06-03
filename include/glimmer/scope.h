@@ -11,6 +11,7 @@ namespace glimmer {
 
 struct Scope 
 {    
+    std::string name = {};
     std::chrono::system_clock::time_point start;
     std::chrono::system_clock::time_point end;
     std::source_location source;
