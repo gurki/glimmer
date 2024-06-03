@@ -10,9 +10,10 @@ option( BUILD_EXAMPLES "" ON )
 option( ENABLE_DEFINES "" ON )
 
 add_library( ${PROJECT_NAME} STATIC 
-    src/profile.cpp
-    src/guard.cpp
     src/dump.cpp
+    src/guard.cpp
+    src/profile.cpp
+    src/stackcollapse.cpp
 )
 
 if ( ENABLE_DEFINES ) 

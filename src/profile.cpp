@@ -8,6 +8,12 @@ std::unique_ptr<Profile> Profile::instance_ = nullptr;
 
 
 ////////////////////////////////////////////////////////////////////////////////
+Profile::Profile() {
+    start_  = std::chrono::system_clock::now();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 Profile& Profile::instance() 
 {
     if ( ! instance_ ) {
@@ -30,35 +36,30 @@ void Profile::beginScope( const std::source_location source )
 
     std::scoped_lock lock( mutex_ );
 
-    auto& page = pages_[ thread ];
-    scope.level = page.level;
-    page.level++;
+    int& level = levels_[ thread ];
+    scope.level = level;
+    level++;
 
-    page.scopes.emplace_back( std::move( scope ) );
+    scopes_.emplace_back( std::move( scope ) );
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 void Profile::endScope()
 {
-    Page* pagePtr = nullptr;
     const auto thread = std::this_thread::get_id();
 
-    {
-        std::scoped_lock lock( mutex_ );
-
-        if ( ! pages_.contains( thread ) ) {
-            return;
-        }
-
-        pagePtr = &pages_.at( thread );
-    }
-
-    Page& page = *pagePtr;
-    page.level--;
+    std::scoped_lock lock( mutex_ );
     
-    const auto rng = std::ranges::find_last( page.scopes, page.level, []( const Scope& scope ) {
-        return scope.level;
+    int& level = levels_[ thread ];
+    level--;
+
+    //  OPTIM: 
+    //    use std::stack<std::thread::id, int> to keep track of current 
+    //    top-level scope instead of linear search
+    
+    const auto rng = std::ranges::find_last_if( scopes_, [ thread, level ]( const Scope& scope ) {
+        return scope.thread == thread && scope.level == level;
     });
 
     if ( rng.empty() ) {

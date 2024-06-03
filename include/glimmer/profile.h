@@ -10,31 +10,27 @@ namespace glimmer {
 class Scope;
 
 
-struct Page
-{
-    std::chrono::system_clock::time_point start;
-    std::chrono::system_clock::time_point end;
-    std::vector<Scope> scopes;
-    int level;
-};
-
-
 class Profile 
 {
     public:
 
+        Profile();
         void beginScope( const std::source_location source = std::source_location::current() );
         void endScope();
 
-        const auto& pages() const { return pages_; }
+        const auto& start() const { return start_; }
+        const auto& scopes() const { return scopes_; }
 
         static Profile& instance();
 
     private:
 
-        std::mutex mutex_;
-        std::unordered_map<std::thread::id, Page> pages_;
+        std::chrono::system_clock::time_point start_;
+        std::vector<Scope> scopes_;
+        std::unordered_map<std::thread::id, int> levels_;
 
+        std::mutex mutex_;
+        
         static std::unique_ptr<Profile> instance_;
 };
 
