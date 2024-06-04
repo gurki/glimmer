@@ -1,6 +1,8 @@
 # glimmer 🔥
 A tiny cpp flame graph profiling library
 
+![](docs/simple.svg)
+
 
 ## Overview
 - `Frame` - collection of scopes over time
@@ -37,13 +39,6 @@ int main( int argc, char* argv[] )
 ```
 
 ```
-# minimal.txt
-1d28;main(int,char *[]) 32999
-1d28;main(int,char *[]);worker(void) 16912
-2364;worker(void) 15916
-```
-
-```
 flamegraph.pl --title simple \
     --colors java \
     --inverted \
@@ -55,8 +50,6 @@ flamegraph.pl --title simple \
 
 ![](docs/minimal.svg)
 
-![](docs/simple.svg)
-
 
 ## Options
 
@@ -67,15 +60,14 @@ GLIMMER_INCLUDE_RETURN_TYPE
 |                              GLIMMER_INCLUDE_SIGNATURE
 |                              |          GLIMMER_INCLUDE_SUFFIXES
 [float] __cdecl [Object::exec] [(float&)] [const override]          
-
-//  Object::exec
-//  float Object::exec
-//  float Object::exec(float&)
-//  float Object::exec(float&) const override
-
-//  DEFAULT
-//  Object::exec(float&)
 ```
+
+- `Object::exec`
+- `float Object::exec`
+- `float Object::exec(float&)`
+- `float Object::exec(float&) const override`
+
+Default: `Object::exec(float&)`
 
 ### GLIMMER_PREPEND_FUNCTION_TO_NAMED
 
@@ -83,10 +75,7 @@ GLIMMER_INCLUDE_RETURN_TYPE
 float compute(void) {
     GLIMMER_NGUARD( "ScopeWithCustomName" );
 }
-
-//  OFF
-glimmer;main;ScopeWithCustomName 1000
-
-//  ON
-glimmer;main;float compute(void)::ScopeWithCustomName 1000
 ```
+
+- `OFF`: `ScopeWithCustomName`
+- `ON `: `float compute(void)::ScopeWithCustomName`
