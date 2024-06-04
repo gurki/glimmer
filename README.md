@@ -3,8 +3,8 @@ A tiny cpp flame graph profiling library
 
 
 ## Overview
-- `Frame` - keep track of beginning and ending scopes 
-- `Scope` - location and times of entry and exit
+- `Frame` - collection of scopes over time
+- `Scope` - location and time of entry and exit
 - `Guard` - lifetime-based scope
 
 
