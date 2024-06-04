@@ -7,6 +7,7 @@
     #define GLIMMER_END ( glimmer::Frame::instance().pop() )
     #define GLIMMER_GUARD glimmer::Guard _glimmer_guard {}
     #define GLIMMER_NGUARD(...) glimmer::Guard _glimmer_guard(__VA_ARGS__)
+    #define GLIMMER_DUMP glimmer::dump( glimmer::Frame::instance() )
 #else
     #define GLIMMER {}
     #define GLIMMER_BEGIN
@@ -14,4 +15,5 @@
     #define GLIMMER_END
     #define GLIMMER_GUARD
     #define GLIMMER_NGUARD
+    #define GLIMMER_DUMP
 #endif

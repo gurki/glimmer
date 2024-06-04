@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="1200" height="166" onload="init(evt)" viewBox="0 0 1200 166" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg version="1.1" width="480" height="166" onload="init(evt)" viewBox="0 0 480 166" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
 <!-- NOTES:  -->
 <defs>
@@ -79,7 +79,7 @@
 	// show
 	window.addEventListener("mouseover", function(e) {
 		var target = find_group(e.target);
-		if (target) details.nodeValue = "Function: " + g_to_text(target);
+		if (target) details.nodeValue = " " + g_to_text(target);
 	}, false)
 
 	// clear
@@ -252,7 +252,7 @@
 			var ew = parseFloat(a.width.value);
 			var upstack;
 			// Is it an ancestor
-			if (0 == 0) {
+			if (1 == 0) {
 				upstack = parseFloat(a.y.value) > ymin;
 			} else {
 				upstack = parseFloat(a.y.value) < ymin;
@@ -421,105 +421,125 @@
 	}
 ]]>
 </script>
-<rect x="0.0" y="0" width="1200.0" height="166.0" fill="url(#background)"  />
-<text id="title" x="600.00" y="24" >simple</text>
+<rect x="0.0" y="0" width="480.0" height="166.0" fill="url(#background)"  />
+<text id="title" x="240.00" y="24" >simple</text>
 <text id="details" x="10.00" y="149" > </text>
 <text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
-<text id="search" x="1090.00" y="24" >Search</text>
-<text id="ignorecase" x="1174.00" y="24" >ic</text>
-<text id="matched" x="1090.00" y="149" > </text>
+<text id="search" x="370.00" y="24" >Search</text>
+<text id="ignorecase" x="454.00" y="24" >ic</text>
+<text id="matched" x="370.00" y="149" > </text>
 <g id="frames">
 <g >
-<title>13096 (45,629 samples, 5.87%)</title><rect x="1120.8" y="101" width="69.2" height="15.0" fill="rgb(238,106,106)" rx="2" ry="2" />
-<text  x="1123.76" y="111.5" >13096</text>
+<title>void workerA(void) (15,170 ms, 1.73%)</title><rect x="42.5" y="100" width="7.9" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="45.46" y="110.5" ></text>
 </g>
 <g >
-<title>workerA (16,055 samples, 2.06%)</title><rect x="719.9" y="37" width="24.3" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="722.88" y="47.5" >w..</text>
+<title>auto main::&lt;lambda_1&gt;(void) const (31,475 ms, 3.59%)</title><rect x="10.0" y="68" width="16.5" height="15.0" fill="rgb(201,201,59)" rx="2" ry="2" />
+<text  x="13.00" y="78.5" ></text>
 </g>
 <g >
-<title>Functor::fun (16,144 samples, 2.08%)</title><rect x="528.2" y="53" width="24.5" height="15.0" fill="rgb(200,200,59)" rx="2" ry="2" />
-<text  x="531.19" y="63.5" >F..</text>
+<title>void workerA(void) (44,229 ms, 5.04%)</title><rect x="407.6" y="68" width="23.2" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="410.57" y="78.5" >v..</text>
 </g>
 <g >
-<title>workerD (47,332 samples, 6.09%)</title><rect x="744.2" y="53" width="71.9" height="15.0" fill="rgb(218,77,77)" rx="2" ry="2" />
-<text  x="747.24" y="63.5" >workerD</text>
+<title>void workerA(void) (45,249 ms, 5.16%)</title><rect x="446.3" y="68" width="23.7" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="449.27" y="78.5" >v..</text>
 </g>
 <g >
-<title>main (609,114 samples, 78.33%)</title><rect x="10.0" y="85" width="924.3" height="15.0" fill="rgb(242,112,112)" rx="2" ry="2" />
-<text  x="13.00" y="95.5" >main</text>
+<title>second worker (76,867 ms, 8.76%)</title><rect x="342.2" y="100" width="40.3" height="15.0" fill="rgb(240,109,109)" rx="2" ry="2" />
+<text  x="345.17" y="110.5" >sec..</text>
 </g>
 <g >
-<title>workerE (251,492 samples, 32.34%)</title><rect x="552.7" y="69" width="381.6" height="15.0" fill="rgb(211,66,66)" rx="2" ry="2" />
-<text  x="555.68" y="79.5" >workerE</text>
+<title>3828 (634,918 ms, 72.38%)</title><rect x="74.6" y="52" width="333.0" height="15.0" fill="rgb(250,123,123)" rx="2" ry="2" />
+<text  x="77.62" y="62.5" >3828</text>
 </g>
 <g >
-<title>workerA (46,116 samples, 5.93%)</title><rect x="1004.1" y="85" width="70.0" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="1007.09" y="95.5" >workerA</text>
+<title>4710 (29,563 ms, 3.37%)</title><rect x="430.8" y="52" width="15.5" height="15.0" fill="rgb(250,123,123)" rx="2" ry="2" />
+<text  x="433.77" y="62.5" ></text>
 </g>
 <g >
-<title>workerA (31,316 samples, 4.03%)</title><rect x="956.6" y="85" width="47.5" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="959.57" y="95.5" >work..</text>
+<title>void workerE(void) (249,481 ms, 28.44%)</title><rect x="276.7" y="84" width="130.9" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="279.74" y="94.5" >void workerE(void)</text>
 </g>
 <g >
-<title>9436 (46,116 samples, 5.93%)</title><rect x="1004.1" y="101" width="70.0" height="15.0" fill="rgb(228,91,91)" rx="2" ry="2" />
-<text  x="1007.09" y="111.5" >9436</text>
+<title>3ebc (44,229 ms, 5.04%)</title><rect x="407.6" y="52" width="23.2" height="15.0" fill="rgb(249,121,121)" rx="2" ry="2" />
+<text  x="410.57" y="62.5" >3..</text>
 </g>
 <g >
-<title>workerA (45,629 samples, 5.87%)</title><rect x="1120.8" y="85" width="69.2" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="1123.76" y="95.5" >workerA</text>
+<title>void workerA(void) (15,901 ms, 1.81%)</title><rect x="399.2" y="116" width="8.4" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="402.23" y="126.5" ></text>
 </g>
 <g >
-<title>21156 (45,982 samples, 5.91%)</title><rect x="934.3" y="101" width="69.8" height="15.0" fill="rgb(212,68,68)" rx="2" ry="2" />
-<text  x="937.32" y="111.5" >21156</text>
+<title>void workerA(void) (15,736 ms, 1.79%)</title><rect x="18.3" y="84" width="8.2" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="21.25" y="94.5" ></text>
 </g>
 <g >
-<title>workerB (77,927 samples, 10.02%)</title><rect x="816.1" y="53" width="118.2" height="15.0" fill="rgb(232,97,97)" rx="2" ry="2" />
-<text  x="819.06" y="63.5" >workerB</text>
+<title>double main::&lt;lambda_2&gt;(const float,const int &amp;) const (30,382 ms, 3.46%)</title><rect x="34.5" y="84" width="15.9" height="15.0" fill="rgb(221,221,67)" rx="2" ry="2" />
+<text  x="37.48" y="94.5" ></text>
 </g>
 <g >
-<title>4168 (30,765 samples, 3.96%)</title><rect x="1074.1" y="101" width="46.7" height="15.0" fill="rgb(250,122,122)" rx="2" ry="2" />
-<text  x="1077.07" y="111.5" >4168</text>
+<title>void workerA(void) (15,992 ms, 1.82%)</title><rect x="268.4" y="100" width="8.3" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="271.36" y="110.5" ></text>
 </g>
 <g >
-<title>workerB (14,666 samples, 1.89%)</title><rect x="934.3" y="85" width="22.3" height="15.0" fill="rgb(232,97,97)" rx="2" ry="2" />
-<text  x="937.32" y="95.5" >w..</text>
+<title>another named guard (46,671 ms, 5.32%)</title><rect x="317.7" y="100" width="24.5" height="15.0" fill="rgb(239,107,107)" rx="2" ry="2" />
+<text  x="320.70" y="110.5" >a..</text>
 </g>
 <g >
-<title>workerD (47,535 samples, 6.11%)</title><rect x="480.6" y="69" width="72.1" height="15.0" fill="rgb(218,77,77)" rx="2" ry="2" />
-<text  x="483.55" y="79.5" >workerD</text>
+<title>void workerA(void) (29,563 ms, 3.37%)</title><rect x="430.8" y="68" width="15.5" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="433.77" y="78.5" ></text>
 </g>
 <g >
-<title>6444 (609,114 samples, 78.33%)</title><rect x="10.0" y="101" width="924.3" height="15.0" fill="rgb(202,53,53)" rx="2" ry="2" />
-<text  x="13.00" y="111.5" >6444</text>
+<title>all (877,175 ms, 100%)</title><rect x="10.0" y="36" width="460.0" height="15.0" fill="rgb(255,130,130)" rx="2" ry="2" />
+<text  x="13.00" y="46.5" ></text>
 </g>
 <g >
-<title>all (777,606 samples, 100%)</title><rect x="10.0" y="117" width="1180.0" height="15.0" fill="rgb(209,63,63)" rx="2" ry="2" />
-<text  x="13.00" y="127.5" ></text>
+<title>void workerC(void) (48,077 ms, 5.48%)</title><rect x="251.5" y="84" width="25.2" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="254.53" y="94.5" >v..</text>
 </g>
 <g >
-<title>workerA (13,183 samples, 1.70%)</title><rect x="387.7" y="69" width="20.0" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="390.73" y="79.5" ></text>
+<title>086c (123,216 ms, 14.05%)</title><rect x="10.0" y="52" width="64.6" height="15.0" fill="rgb(233,99,99)" rx="2" ry="2" />
+<text  x="13.00" y="62.5" >086c</text>
 </g>
 <g >
-<title>workerA (15,990 samples, 2.06%)</title><rect x="456.3" y="53" width="24.3" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="459.29" y="63.5" >w..</text>
+<title>another named guard (46,601 ms, 5.31%)</title><rect x="220.7" y="84" width="24.4" height="15.0" fill="rgb(239,107,107)" rx="2" ry="2" />
+<text  x="223.70" y="94.5" >a..</text>
 </g>
 <g >
-<title>workerC (47,983 samples, 6.17%)</title><rect x="407.7" y="69" width="72.9" height="15.0" fill="rgb(225,87,87)" rx="2" ry="2" />
-<text  x="410.74" y="79.5" >workerC</text>
+<title>void workerA(void) (30,704 ms, 3.50%)</title><rect x="50.4" y="84" width="16.1" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="53.42" y="94.5" ></text>
 </g>
 <g >
-<title>workerA (30,765 samples, 3.96%)</title><rect x="1074.1" y="85" width="46.7" height="15.0" fill="rgb(240,108,108)" rx="2" ry="2" />
-<text  x="1077.07" y="95.5" >work..</text>
+<title>second worker (15,442 ms, 1.76%)</title><rect x="66.5" y="68" width="8.1" height="15.0" fill="rgb(240,109,109)" rx="2" ry="2" />
+<text  x="69.52" y="78.5" ></text>
 </g>
 <g >
-<title>workerC (47,449 samples, 6.10%)</title><rect x="672.2" y="53" width="72.0" height="15.0" fill="rgb(225,87,87)" rx="2" ry="2" />
-<text  x="675.24" y="63.5" >workerC</text>
+<title>float Object::exec(void) (15,235 ms, 1.74%)</title><rect x="237.1" y="100" width="8.0" height="15.0" fill="rgb(213,213,63)" rx="2" ry="2" />
+<text  x="240.14" y="110.5" ></text>
 </g>
 <g >
-<title>Functor::fun (15,588 samples, 2.00%)</title><rect x="792.4" y="37" width="23.7" height="15.0" fill="rgb(200,200,59)" rx="2" ry="2" />
-<text  x="795.41" y="47.5" >F..</text>
+<title>void workerC(void) (47,847 ms, 5.45%)</title><rect x="382.5" y="100" width="25.1" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="385.48" y="110.5" >v..</text>
+</g>
+<g >
+<title>5acc (45,249 ms, 5.16%)</title><rect x="446.3" y="52" width="23.7" height="15.0" fill="rgb(236,102,102)" rx="2" ry="2" />
+<text  x="449.27" y="62.5" >5..</text>
+</g>
+<g >
+<title>int main(int,char *[]) (634,918 ms, 72.38%)</title><rect x="74.6" y="68" width="333.0" height="15.0" fill="rgb(239,107,107)" rx="2" ry="2" />
+<text  x="77.62" y="78.5" >int main(int,char *[])</text>
+</g>
+<g >
+<title>auto main::&lt;lambda_3&gt;(void) const (76,299 ms, 8.70%)</title><rect x="26.5" y="68" width="40.0" height="15.0" fill="rgb(201,201,59)" rx="2" ry="2" />
+<text  x="29.51" y="78.5" >aut..</text>
+</g>
+<g >
+<title>float Object::exec(void) (15,723 ms, 1.79%)</title><rect x="333.9" y="116" width="8.3" height="15.0" fill="rgb(213,213,63)" rx="2" ry="2" />
+<text  x="336.93" y="126.5" ></text>
+</g>
+<g >
+<title>void workerA(void) (12,198 ms, 1.39%)</title><rect x="245.1" y="84" width="6.4" height="15.0" fill="rgb(231,95,95)" rx="2" ry="2" />
+<text  x="248.13" y="94.5" ></text>
 </g>
 </g>
 </svg>

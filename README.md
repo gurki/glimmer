@@ -32,39 +32,61 @@ int main( int argc, char* argv[] )
     std::async( worker ).wait();
 
     GLIMMER_END;
-    glimmer::dump( GLIMMER, "out.txt" );
+    GLIMMER_DUMP;
 }
 ```
 
-``` 
-# out.txt
-7524;main 28179
-7524;main;worker 12166
-1872;worker 15706
+```
+# minimal.txt
+1d28;main(int,char *[]) 32999
+1d28;main(int,char *[]);worker(void) 16912
+2364;worker(void) 15916
 ```
 
-![](docs/out.svg)
+```
+flamegraph.pl --title simple \
+    --colors java \
+    --inverted \
+    --width 480 \
+    --nametype "" \ 
+    --countname ms \
+    --hash minimal.txt > minimal.svg
+``` 
+
+![](docs/minimal.svg)
+
+![](docs/simple.svg)
 
 
-## Naming
+## Options
 
-### MSVC
-- `void __cdecl worker(void)`
-- `float __cdecl Object::exec(void)`
-- `__cdecl Object::~Object(void)`
-- `auto __cdecl main::<lambda_2>::operator ()(const float,const int &) const`
-- `double __cdecl Object::compute(const float,const int &) override`
+### GLIMMER_INCLUDE_X
 
-### Name Only
-- `worker`
-- `Object::exec`
-- `Object::~Object`
-- `main::<lambda_2>`
-- `Object::compute` 
+```
+GLIMMER_INCLUDE_RETURN_TYPE
+|                              GLIMMER_INCLUDE_SIGNATURE
+|                              |          GLIMMER_INCLUDE_SUFFIXES
+[float] __cdecl [Object::exec] [(float&)] [const override]          
 
-### GLIMMER_INCLUDE_ALL
-- `void worker(void)`
-- `float Object::exec(void)`
-- `Object::~Object(void)`
-- `auto main::<lambda_2>(const float,const int &) const`
-- `double Object::compute(const float,const int &) override` 
+//  Object::exec
+//  float Object::exec
+//  float Object::exec(float&)
+//  float Object::exec(float&) const override
+
+//  DEFAULT
+//  Object::exec(float&)
+```
+
+### GLIMMER_PREPEND_FUNCTION_TO_NAMED
+
+```
+float compute(void) {
+    GLIMMER_NGUARD( "ScopeWithCustomName" );
+}
+
+//  OFF
+glimmer;main;ScopeWithCustomName 1000
+
+//  ON
+glimmer;main;float compute(void)::ScopeWithCustomName 1000
+```

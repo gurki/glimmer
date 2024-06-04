@@ -1,4 +1,0 @@
-# out.txt
-7524;main 28179
-7524;main;worker 12166
-1872;worker 15706

@@ -52,7 +52,7 @@ void dump(
         );
 
         const std::string line = std::format( 
-            "glimmer;{:04x}{} {}\n", 
+            "{:04x}{} {}\n", 
             std::atoi( item.trace[ 0 ].c_str() ),
             traceStr, 
             durationUs.count() 

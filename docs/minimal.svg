@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="1200" height="134" onload="init(evt)" viewBox="0 0 1200 134" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg version="1.1" width="480" height="134" onload="init(evt)" viewBox="0 0 480 134" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
 <!-- NOTES:  -->
 <defs>
@@ -252,7 +252,7 @@
 			var ew = parseFloat(a.width.value);
 			var upstack;
 			// Is it an ancestor
-			if (0 == 0) {
+			if (1 == 0) {
 				upstack = parseFloat(a.y.value) > ymin;
 			} else {
 				upstack = parseFloat(a.y.value) < ymin;
@@ -421,37 +421,37 @@
 	}
 ]]>
 </script>
-<rect x="0.0" y="0" width="1200.0" height="134.0" fill="url(#background)"  />
-<text id="title" x="600.00" y="24" >out.txt</text>
+<rect x="0.0" y="0" width="480.0" height="134.0" fill="url(#background)"  />
+<text id="title" x="240.00" y="24" >minimal</text>
 <text id="details" x="10.00" y="117" > </text>
 <text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
-<text id="search" x="1090.00" y="24" >Search</text>
-<text id="ignorecase" x="1174.00" y="24" >ic</text>
-<text id="matched" x="1090.00" y="117" > </text>
+<text id="search" x="370.00" y="24" >Search</text>
+<text id="ignorecase" x="454.00" y="24" >ic</text>
+<text id="matched" x="370.00" y="117" > </text>
 <g id="frames">
 <g >
-<title>7524 (40,345 us, 71.98%)</title><rect x="340.6" y="69" width="849.4" height="15.0" fill="rgb(202,53,53)" rx="2" ry="2" />
-<text  x="343.65" y="79.5" >7524</text>
+<title>all (56,862 ms, 100%)</title><rect x="10.0" y="36" width="460.0" height="15.0" fill="rgb(255,130,130)" rx="2" ry="2" />
+<text  x="13.00" y="46.5" ></text>
 </g>
 <g >
-<title>main (40,345 us, 71.98%)</title><rect x="340.6" y="53" width="849.4" height="15.0" fill="rgb(242,112,112)" rx="2" ry="2" />
-<text  x="343.65" y="63.5" >main</text>
+<title>5574 (15,797 ms, 27.78%)</title><rect x="342.2" y="52" width="127.8" height="15.0" fill="rgb(233,98,98)" rx="2" ry="2" />
+<text  x="345.21" y="62.5" >5574</text>
 </g>
 <g >
-<title>1872 (15,706 us, 28.02%)</title><rect x="10.0" y="69" width="330.6" height="15.0" fill="rgb(202,53,53)" rx="2" ry="2" />
-<text  x="13.00" y="79.5" >1872</text>
+<title>main (41,065 ms, 72.22%)</title><rect x="10.0" y="68" width="332.2" height="15.0" fill="rgb(219,79,79)" rx="2" ry="2" />
+<text  x="13.00" y="78.5" >main</text>
 </g>
 <g >
-<title>all (56,051 us, 100%)</title><rect x="10.0" y="85" width="1180.0" height="15.0" fill="rgb(209,63,63)" rx="2" ry="2" />
-<text  x="13.00" y="95.5" ></text>
+<title>worker (12,489 ms, 21.96%)</title><rect x="241.2" y="84" width="101.0" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
+<text  x="244.17" y="94.5" >worker</text>
 </g>
 <g >
-<title>worker (15,706 us, 28.02%)</title><rect x="10.0" y="53" width="330.6" height="15.0" fill="rgb(206,60,60)" rx="2" ry="2" />
-<text  x="13.00" y="63.5" >worker</text>
+<title>worker (15,797 ms, 27.78%)</title><rect x="342.2" y="68" width="127.8" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
+<text  x="345.21" y="78.5" >worker</text>
 </g>
 <g >
-<title>worker (12,166 us, 21.71%)</title><rect x="933.9" y="37" width="256.1" height="15.0" fill="rgb(206,60,60)" rx="2" ry="2" />
-<text  x="936.88" y="47.5" >worker</text>
+<title>39e0 (41,065 ms, 72.22%)</title><rect x="10.0" y="52" width="332.2" height="15.0" fill="rgb(246,118,118)" rx="2" ry="2" />
+<text  x="13.00" y="62.5" >39e0</text>
 </g>
 </g>
 </svg>

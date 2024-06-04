@@ -6,11 +6,20 @@ project( glimmer-examples
     LANGUAGES CXX
 )
 
-add_executable( ${PROJECT_NAME}
+add_executable( ${PROJECT_NAME}-minimal
+    minimal.cpp
+)
+
+add_executable( ${PROJECT_NAME}-simple
     simple.cpp
 )
 
-target_link_libraries( ${PROJECT_NAME} 
-    PUBLIC
-        glimmer
+target_compile_definitions( glimmer 
+    PUBLIC 
+        GLIMMER_INCLUDE_RETURN_TYPE 
+        GLIMMER_INCLUDE_SIGNATURE 
+        GLIMMER_INCLUDE_SUFFIXES 
 )
+
+target_link_libraries( ${PROJECT_NAME}-minimal PUBLIC glimmer )
+target_link_libraries( ${PROJECT_NAME}-simple PUBLIC glimmer )
