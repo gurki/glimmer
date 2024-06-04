@@ -1,23 +1,24 @@
-#include "glimmer/profile.h"
+#include "glimmer/frame.h"
 #include "glimmer/scope.h"
 
 namespace glimmer {
 
 
-std::unique_ptr<Profile> Profile::instance_ = nullptr;
+std::unique_ptr<Frame> Frame::instance_ = nullptr;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Profile::Profile() {
+Frame::Frame() {
     start_  = std::chrono::system_clock::now();
+    end_ = start_;
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Profile& Profile::instance() 
+Frame& Frame::instance() 
 {
     if ( ! instance_ ) {
-        instance_ = std::make_unique<Profile>();
+        instance_ = std::make_unique<Frame>();
     }
 
     return *instance_;
@@ -25,12 +26,12 @@ Profile& Profile::instance()
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Profile::beginScope( 
+void Frame::push( 
     const std::string& name, 
     const std::source_location source )
 {
     const auto thread = std::this_thread::get_id();
-
+    
     Scope scope;
     scope.name = name;
     scope.source = source;
@@ -48,7 +49,7 @@ void Profile::beginScope(
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Profile::endScope()
+void Frame::pop()
 {
     const auto thread = std::this_thread::get_id();
 
@@ -59,7 +60,8 @@ void Profile::endScope()
 
     //  OPTIM: 
     //    use std::stack<std::thread::id, int> to keep track of current 
-    //    top-level scope instead of linear search
+    //    top-level scope and access in O(1) instead of linear search.
+    //    additionally minimize lock duration.
     
     const auto rng = std::ranges::find_last_if( scopes_, [ thread, level ]( const Scope& scope ) {
         return scope.thread == thread && scope.level == level;
@@ -72,6 +74,16 @@ void Profile::endScope()
     auto& scope = *rng.begin();
     scope.end = std::chrono::system_clock::now();
     scope.closed = true;
+
+    end_ = std::max( scope.end, end_ );
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+void Frame::setThreadName( const std::string& name ) {
+    const auto thread = std::this_thread::get_id();
+    std::scoped_lock lock( mutex_ );
+    names_[ thread ] = name;
 }
 
 

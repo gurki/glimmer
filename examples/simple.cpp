@@ -7,8 +7,11 @@
 using namespace std::chrono_literals;
 
 
-struct Functor
+struct Object
 {
+    Object() { GLIMMER_GUARD; }
+    ~Object() { GLIMMER_GUARD; }
+
     float exec() {
         GLIMMER_GUARD;
         std::this_thread::sleep_for( 2ms );
@@ -22,7 +25,7 @@ void workerA() {
 }
 
 void workerB() {
-    GLIMMER_NGUARD( "second worker");
+    GLIMMER_NGUARD( "second worker" );
     std::this_thread::sleep_for( 1ms );
 }
 
@@ -33,9 +36,9 @@ void workerC() {
 }
 
 void workerD() {
-    GLIMMER_NGUARD( "another named guard");
-    Functor fn;
-    fn.exec();
+    GLIMMER_NGUARD( "another named guard" );
+    Object obj;
+    obj.exec();
     std::this_thread::sleep_for( 2ms );
 }
 
@@ -59,6 +62,12 @@ int main( int argc, char* argv[] )
     std::async( workerB ).wait();
     std::vector< std::future<void> > futures;
 
+    std::async( [](){ GLIMMER_GUARD; workerA(); } ).wait();
+    
+    int val;
+    const auto fn = []( const float x, const int& y ) -> double { GLIMMER_GUARD; workerA(); return -1.0; };
+    std::async( [&](){ GLIMMER_GUARD; fn( 0, val ); } ).wait();
+
     for ( int i = 0; i < 10; i++ ) {
         auto futureA = std::async( workerA );
         futures.emplace_back( std::move( futureA ) );
@@ -73,5 +82,5 @@ int main( int argc, char* argv[] )
     }
 
     GLIMMER_END;
-    glimmer::dumpStackCollapse( GLIMMER, "out.txt" );
+    glimmer::dump( GLIMMER, "collapsed.txt" );
 }

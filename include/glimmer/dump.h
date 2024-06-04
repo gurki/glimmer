@@ -5,12 +5,9 @@
 namespace glimmer {
 
 
-class Profile;
+class Frame;
 
-void dumpStackCollapse( 
-    const Profile& profile, 
-    const std::string& filename 
-);
+void dump( const Frame&, const std::string& filename = {} );
 
 
 }   //  ::glimmer

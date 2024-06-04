@@ -3,16 +3,15 @@ A tiny cpp flame graph profiling library
 
 
 ## Overview
-- `Profile` - pages, one per thread
-- `Page` - scopes over time
+- `Frame` - keep track of beginning and ending scopes 
 - `Scope` - location and times of entry and exit
 - `Guard` - lifetime-based scope
 
 
 ## Output
-Dump to textfile in stack collapse format.
+Dump textfile in stack collapse format.
 Can be used directly with [FlameGraph](https://github.com/brendangregg/FlameGraph) or [speedscope](https://www.speedscope.app/).
-Shoutout Brendan Gregg and Jamie Wong for building kool stuff.
+Shoutout [Brendan Gregg](https://twitter.com/brendangregg) and [Jamie Wong](https://twitter.com/jlfwong) for building and sharing kool stuff.
 
 
 ## Usage
@@ -33,7 +32,7 @@ int main( int argc, char* argv[] )
     std::async( worker ).wait();
 
     GLIMMER_END;
-    glimmer::dumpStackCollapse( GLIMMER, "out.txt" );
+    glimmer::dump( GLIMMER, "out.txt" );
 }
 ```
 
@@ -45,3 +44,27 @@ int main( int argc, char* argv[] )
 ```
 
 ![](docs/out.svg)
+
+
+## Naming
+
+### MSVC
+- `void __cdecl worker(void)`
+- `float __cdecl Object::exec(void)`
+- `__cdecl Object::~Object(void)`
+- `auto __cdecl main::<lambda_2>::operator ()(const float,const int &) const`
+- `double __cdecl Object::compute(const float,const int &) override`
+
+### Name Only
+- `worker`
+- `Object::exec`
+- `Object::~Object`
+- `main::<lambda_2>`
+- `Object::compute` 
+
+### GLIMMER_INCLUDE_ALL
+- `void worker(void)`
+- `float Object::exec(void)`
+- `Object::~Object(void)`
+- `auto main::<lambda_2>(const float,const int &) const`
+- `double Object::compute(const float,const int &) override` 

@@ -6,24 +6,26 @@
 
 namespace glimmer {
 
+class Frame;
 
-class Profile;
 
-
-struct StackTrace {
-    std::vector<std::string> stack;
+struct TimedTrace {
+    std::string name;
+    std::vector<std::string> trace;
     std::chrono::system_clock::time_point start;
     std::chrono::system_clock::time_point end;
 };
 
 
-struct StackCollapse {
+struct Collapse
+{
+    std::vector<TimedTrace> traces;
     std::chrono::system_clock::time_point start;
-    std::vector<StackTrace> traces;
+    std::chrono::system_clock::time_point end;
+    int depth;
+
+    static Collapse fromFrame( const Frame& );
 };
-
-
-StackCollapse foldStack( const Profile& );
 
 
 }   //  ::glimmer
