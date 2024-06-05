@@ -52,7 +52,6 @@ void Frame::push(
 ////////////////////////////////////////////////////////////////////////////////
 void Frame::pop()
 {
-    const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
 
     std::scoped_lock lock( mutex_ );
@@ -60,8 +59,8 @@ void Frame::pop()
     int& level = levels_[ thread ];
     level--;
 
-    //  OPTIM: 
-    //    use std::stack<std::thread::id, int> to keep track of current 
+    //  OPTIM:
+    //    use std::stack<std::thread::id, int> to keep track of current
     //    top-level scope and access in O(1) instead of linear search.
     //    additionally minimize lock duration.
     
@@ -74,8 +73,8 @@ void Frame::pop()
     }
 
     auto& scope = *rng.begin();
-    scope.end = timestamp;
     scope.closed = true;
+    scope.end = std::chrono::system_clock::now();
 
     end_ = std::max( scope.end, end_ );
 }
