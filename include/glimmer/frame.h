@@ -1,13 +1,13 @@
 #pragma once
 
+#include "glimmer/scope.h"
+
+#include <thread>
 #include <mutex>
 #include <unordered_map>
 #include <source_location>
 
 namespace glimmer {
-
-
-class Scope;
 
 
 class Frame

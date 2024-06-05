@@ -1,6 +1,8 @@
 #include "glimmer/frame.h"
 #include "glimmer/scope.h"
 
+#include <algorithm>
+
 namespace glimmer {
 
 

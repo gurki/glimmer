@@ -7,12 +7,13 @@
 #include <ranges>
 #include <print>
 #include <functional>
+#include <algorithm>
 
 namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void dump( 
+void dump(
     const Frame& frame,
     const std::string& filename )
 {
@@ -24,8 +25,8 @@ void dump(
 
     if ( outname.empty() ) {
         const auto time = std::chrono::system_clock::now();
-        outname = std::format( 
-            "{:%Y-%m-%d_%H%M%S_collapsed.txt}", 
+        outname = std::format(
+            "{:%Y-%m-%d_%H%M%S_collapsed.txt}",
             std::chrono::time_point_cast<std::chrono::seconds>( time )
         );
     }
@@ -43,19 +44,19 @@ void dump(
         const auto duration = item.end - item.start;
         const auto durationUs = std::chrono::duration_cast<std::chrono::microseconds>( duration );
 
-        const std::string traceStr = std::ranges::fold_left( 
-            item.trace | std::views::drop( 1 ), 
-            std::string{}, 
+        const std::string traceStr = std::ranges::fold_left(
+            item.trace | std::views::drop( 1 ),
+            std::string{},
             []( const std::string& acc, const std::string& curr ) {
                 return std::format( "{};{}", acc, curr );
             }
         );
 
-        const std::string line = std::format( 
-            "{:04x}{} {}\n", 
+        const std::string line = std::format(
+            "{:04x}{} {}\n",
             std::atoi( item.trace[ 0 ].c_str() ),
-            traceStr, 
-            durationUs.count() 
+            traceStr,
+            durationUs.count()
         );
         fout.write( line.c_str(), line.size() );
     }
