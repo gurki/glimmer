@@ -49,12 +49,6 @@ size_t Frame::push(
     scope.level = level;
     level++;
 
-    std::println( "\n{}:{} - {}", scope.thread, scope.level, scope.source.function_name() );
-    for ( const auto& item : scope.trace ) {
-        std::println( "{}:{} - {}", item.source_file(), item.source_line(), item.description() );
-    }
-    std::println( "" );
-
     scopes_.emplace_back( std::move( scope ) );
     return scopes_.size() - 1;
 }
