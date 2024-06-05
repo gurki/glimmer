@@ -6,6 +6,7 @@
 #include <mutex>
 #include <unordered_map>
 #include <source_location>
+#include <stacktrace>
 
 namespace glimmer {
 
@@ -18,7 +19,8 @@ class Frame
 
         size_t push(
             const std::string& name = {},
-            const std::source_location source = std::source_location::current()
+            const std::source_location& source = std::source_location::current(),
+            const std::stacktrace& trace = std::stacktrace::current()
         );
         void pop();
         void pop( const size_t id );

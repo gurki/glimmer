@@ -30,7 +30,8 @@ Frame& Frame::instance()
 ////////////////////////////////////////////////////////////////////////////////
 size_t Frame::push(
     const std::string& name,
-    const std::source_location source )
+    const std::source_location& source,
+    const std::stacktrace& trace )
 {
     const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
@@ -38,6 +39,7 @@ size_t Frame::push(
     Scope scope;
     scope.name = name;
     scope.source = source;
+    scope.trace = trace;
     scope.thread = thread;
     scope.start = timestamp;
 
@@ -46,6 +48,12 @@ size_t Frame::push(
     int& level = levels_[ thread ];
     scope.level = level;
     level++;
+
+    std::println( "\n{}:{} - {}", scope.thread, scope.level, scope.source.function_name() );
+    for ( const auto& item : scope.trace ) {
+        std::println( "{}:{} - {}", item.source_file(), item.source_line(), item.description() );
+    }
+    std::println( "" );
 
     scopes_.emplace_back( std::move( scope ) );
     return scopes_.size() - 1;

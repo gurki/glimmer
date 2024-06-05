@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stacktrace>
 #include <source_location>
 #include <thread>
 #include <chrono>
@@ -9,11 +10,12 @@
 namespace glimmer {
 
 
-struct Scope 
-{    
+struct Scope
+{
     std::string name = {};
     std::chrono::system_clock::time_point start;
     std::chrono::system_clock::time_point end;
+    std::stacktrace trace;
     std::source_location source;
     std::thread::id thread;
     int level = -1;
@@ -40,7 +42,7 @@ struct std::formatter<glimmer::Scope>
 
         function = function.substr( 0, function.find_first_of( '(' ) );
         function = function.substr( function.find_last_of( ' ' ) + 1 );
-        
+
         const std::filesystem::path filepath( scope.source.file_name() );
         const std::string filename = filepath.filename().string();
 
