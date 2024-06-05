@@ -14,14 +14,14 @@ struct Object
 
     float exec() {
         GLIMMER_GUARD;
-        std::this_thread::sleep_for( 2ms );
+        std::this_thread::sleep_for( 1ms );
         return 1.f;
     }
 };
 
 void workerA() {
     GLIMMER_GUARD;
-    std::this_thread::sleep_for( 10ms );
+    std::this_thread::sleep_for( 1ms );
 }
 
 void workerB() {
@@ -32,27 +32,31 @@ void workerB() {
 void workerC() {
     GLIMMER_GUARD;
     workerA();
-    std::this_thread::sleep_for( 2ms );
+    std::this_thread::sleep_for( 1ms );
 }
 
 void workerD() {
     GLIMMER_NGUARD( "another named guard" );
     Object obj;
     obj.exec();
-    std::this_thread::sleep_for( 2ms );
+    std::this_thread::sleep_for( 1ms );
 }
 
 void workerE() {
     GLIMMER_GUARD;
     workerC();
     workerD();
-    std::this_thread::sleep_for( 10ms );
+    std::this_thread::sleep_for( 1ms );
 }
 
 
 int main( int argc, char* argv[] )
 {
     GLIMMER_BEGIN;
+
+    GLIMMER_NBEGIN( "local-scope" );
+    std::this_thread::sleep_for( 1ms );
+    GLIMMER_END;
 
     workerA();
     workerC();
@@ -63,7 +67,7 @@ int main( int argc, char* argv[] )
     std::vector< std::future<void> > futures;
 
     std::async( [](){ GLIMMER_GUARD; workerA(); } ).wait();
-    
+
     int val;
     const auto fn = []( const float x, const int& y ) -> double { GLIMMER_GUARD; workerA(); return -1.0; };
     std::async( [&](){ GLIMMER_GUARD; fn( 0, val ); } ).wait();

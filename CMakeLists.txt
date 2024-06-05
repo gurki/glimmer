@@ -6,24 +6,24 @@ project( glimmer
     LANGUAGES CXX
 )
 
-add_library( ${PROJECT_NAME} STATIC 
+add_library( ${PROJECT_NAME} STATIC
     src/collapse.cpp
     src/dump.cpp
     src/frame.cpp
     src/guard.cpp
 )
 
-target_compile_features( ${PROJECT_NAME} PUBLIC 
-    cxx_std_23 
+target_compile_features( ${PROJECT_NAME} PUBLIC
+    cxx_std_23
 )
 
-target_include_directories( ${PROJECT_NAME} 
+target_include_directories( ${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries( ${PROJECT_NAME} 
+target_link_libraries( ${PROJECT_NAME}
     PUBLIC
 )
 
@@ -35,11 +35,11 @@ option( GLIMMER_INCLUDE_SIGNATURE "Include signature with name, e.g. `main(int,c
 option( GLIMMER_INCLUDE_SUFFIXES "Include suffixes with name, e.g. `size() const override`" OFF )
 option( GLIMMER_INCLUDE_ALL "Include all of the above e.g. `double compute(float) override`" OFF )
 
-if ( GLIMMER_PREPEND_FUNCTION_TO_NAMED ) 
+if ( GLIMMER_PREPEND_FUNCTION_TO_NAMED )
     target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_PREPEND_FUNCTION_TO_NAMED )
 endif()
 
-if ( GLIMMER_DISABLE ) 
+if ( GLIMMER_DISABLE )
     target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_DISABLE )
 endif()
 
@@ -56,7 +56,7 @@ if( GLIMMER_INCLUDE_SUFFIXES )
 endif()
 
 if( GLIMMER_INCLUDE_ALL )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC 
+    target_compile_definitions( ${PROJECT_NAME} PUBLIC
         GLIMMER_INCLUDE_RETURN_TYPE
         GLIMMER_INCLUDE_SIGNATURE
         GLIMMER_INCLUDE_SUFFIXES

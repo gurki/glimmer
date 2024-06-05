@@ -5,17 +5,18 @@ namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Guard::Guard( 
-    const std::string& name, 
-    const std::source_location source ) 
+Guard::Guard(
+    const std::reference_wrapper<Frame>& frame_,
+    const std::string& name,
+    const std::source_location source ) : frame( frame_ )
 {
-    Frame::instance().push( name, source );
+    scopeId = frame.get().push( name, source );
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 Guard::~Guard() {
-    Frame::instance().pop();
+    frame.get().pop( scopeId );
 }
 
 

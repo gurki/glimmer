@@ -15,7 +15,7 @@ Frame::Frame() {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Frame& Frame::instance() 
+Frame& Frame::instance()
 {
     if ( ! instance_ ) {
         instance_ = std::make_unique<Frame>();
@@ -26,13 +26,13 @@ Frame& Frame::instance()
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Frame::push( 
-    const std::string& name, 
+size_t Frame::push(
+    const std::string& name,
     const std::source_location source )
 {
     const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
-    
+
     Scope scope;
     scope.name = name;
     scope.source = source;
@@ -46,6 +46,7 @@ void Frame::push(
     level++;
 
     scopes_.emplace_back( std::move( scope ) );
+    return scopes_.size() - 1;
 }
 
 
@@ -55,27 +56,50 @@ void Frame::pop()
     const auto thread = std::this_thread::get_id();
 
     std::scoped_lock lock( mutex_ );
-    
-    int& level = levels_[ thread ];
-    level--;
 
     //  OPTIM:
     //    use std::stack<std::thread::id, int> to keep track of current
     //    top-level scope and access in O(1) instead of linear search.
     //    additionally minimize lock duration.
-    
-    const auto rng = std::ranges::find_last_if( scopes_, [ thread, level ]( const Scope& scope ) {
-        return scope.thread == thread && scope.level == level;
+
+    const auto rng = std::ranges::find_last_if( scopes_, [ thread ]( const Scope& scope ) {
+        return scope.thread == thread && ! scope.closed;
     });
 
     if ( rng.empty() ) {
         return;
     }
 
+    levels_[ thread ]--;
+
     auto& scope = *rng.begin();
     scope.closed = true;
     scope.end = std::chrono::system_clock::now();
+    end_ = std::max( scope.end, end_ );
+}
 
+
+////////////////////////////////////////////////////////////////////////////////
+void Frame::pop( const size_t id )
+{
+    const auto thread = std::this_thread::get_id();
+
+    std::scoped_lock lock( mutex_ );
+
+    if ( id >= scopes_.size() ) {
+        return;
+    }
+
+    auto& scope = scopes_[ id ];
+
+    if ( scope.closed ) {
+        return;
+    }
+
+    levels_[ thread ]--;
+
+    scope.closed = true;
+    scope.end = std::chrono::system_clock::now();
     end_ = std::max( scope.end, end_ );
 }
 

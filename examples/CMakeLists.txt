@@ -14,11 +14,11 @@ add_executable( ${PROJECT_NAME}-simple
     simple.cpp
 )
 
-target_compile_definitions( glimmer 
-    PUBLIC 
-        GLIMMER_INCLUDE_RETURN_TYPE 
-        GLIMMER_INCLUDE_SIGNATURE 
-        GLIMMER_INCLUDE_SUFFIXES 
+target_compile_definitions( glimmer
+    PUBLIC
+        GLIMMER_INCLUDE_RETURN_TYPE
+        GLIMMER_INCLUDE_SIGNATURE
+        GLIMMER_INCLUDE_SUFFIXES
 )
 
 target_link_libraries( ${PROJECT_NAME}-minimal PUBLIC glimmer )
