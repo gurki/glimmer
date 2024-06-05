@@ -62,9 +62,6 @@ Collapse Collapse::fromFrame( const Frame& frame )
         }
 #endif 
 
-        const auto duration = scope.end - scope.start;
-        const auto durationUs = std::chrono::duration_cast<std::chrono::microseconds>( duration );
-
         //  always remove one level if we didn't go up
         if ( scope.level <= prevLevel && stack.size() > 1 ) {
             stack.pop_back();

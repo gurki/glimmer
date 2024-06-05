@@ -64,8 +64,8 @@ if( GLIMMER_INCLUDE_ALL )
 endif()
 
 
-option( BUILD_EXAMPLES "" ON )
+option( GLIMMER_BUILD_EXAMPLES "" ON )
 
-if ( BUILD_EXAMPLES )
+if ( GLIMMER_BUILD_EXAMPLES )
     add_subdirectory( examples )
 endif()

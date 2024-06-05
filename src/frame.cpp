@@ -30,13 +30,14 @@ void Frame::push(
     const std::string& name, 
     const std::source_location source )
 {
+    const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
     
     Scope scope;
     scope.name = name;
     scope.source = source;
     scope.thread = thread;
-    scope.start = std::chrono::system_clock::now();
+    scope.start = timestamp;
 
     std::scoped_lock lock( mutex_ );
 
@@ -51,6 +52,7 @@ void Frame::push(
 ////////////////////////////////////////////////////////////////////////////////
 void Frame::pop()
 {
+    const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
 
     std::scoped_lock lock( mutex_ );
@@ -72,7 +74,7 @@ void Frame::pop()
     }
 
     auto& scope = *rng.begin();
-    scope.end = std::chrono::system_clock::now();
+    scope.end = timestamp;
     scope.closed = true;
 
     end_ = std::max( scope.end, end_ );

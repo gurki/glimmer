@@ -25,10 +25,10 @@ struct Scope
 
 
 template<>
-struct std::formatter<glimmer::Scope> 
+struct std::formatter<glimmer::Scope>
 {
-    constexpr auto parse( std::format_parse_context& ctx ) { 
-        return ctx.begin(); 
+    constexpr auto parse( std::format_parse_context& ctx ) {
+        return ctx.begin();
     }
 
     auto format( const glimmer::Scope& scope, std::format_context& ctx )  const
@@ -44,7 +44,7 @@ struct std::formatter<glimmer::Scope>
         const std::filesystem::path filepath( scope.source.file_name() );
         const std::string filename = filepath.filename().string();
 
-        return std::format_to( 
+        return std::format_to(
             ctx.out(),
             "{};{};{}@{}:{}.{} {}",
             scope.thread,
