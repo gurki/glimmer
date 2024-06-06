@@ -16,7 +16,7 @@ A tiny cpp23 flame graph profiling library
 - `Scope` - location and time of entry and exit
 - `Guard` - lifetime-based scope
 
-**glimmer 🔥** is thread-safe, i.e. `Frame::push`, `pop`, `close` and in extension `Guard` can be used safely from anywhere, anytime.
+**glimmer 🔥** is **thread-safe**, i.e. `Frame::push`, `pop`, `close` and in extension `Guard` can be used safely from anywhere, anytime.
 
 
 ## Output
@@ -84,8 +84,8 @@ Convenience functions for quick access to a global frame instance.
 - `GLIMMER_END` - close latest active scope; make sure to match with begin
 - `GLIMMER_GUARD` - generic guard; only one per cpp scope
 - `GLIMMER_DUMP` - write global frame to _YYYY-mm-dd_hhMMSS\_collapsed.txt_
-- `GLIMMER_NBEGIN` - named scope; can be used to identify scopes inside single function
-- `GLIMMER_NGUARD` - named guard; can be used to provide more a readible name for guarded scope
+- `GLIMMER_NBEGIN` - named scope; can be used to differentiate sections inside single function
+- `GLIMMER_NGUARD` - named guard; can be used to add more readible name to guarded scope
 - `GLIMMER_NDUMP` - named dump; write global frame to custom filename
     
 
