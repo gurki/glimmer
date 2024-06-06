@@ -8,10 +8,10 @@ namespace glimmer {
 Guard::Guard(
     const std::reference_wrapper<Frame>& frame_,
     const std::string& name,
-    const std::stacktrace& trace ) : frame( frame_ )
-{
-    scopeId = frame.get().push( name, trace );
-}
+    const std::stacktrace& trace ) : 
+    frame( frame_ ),
+    scopeId( frame_.get().push( name, trace ) )
+{}
 
 
 ////////////////////////////////////////////////////////////////////////////////

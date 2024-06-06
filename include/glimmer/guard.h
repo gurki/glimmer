@@ -20,7 +20,7 @@ struct Guard
     ~Guard();
 
     const std::reference_wrapper<Frame> frame;
-    size_t scopeId;
+    const size_t scopeId;
 };
 
 
