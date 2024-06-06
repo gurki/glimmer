@@ -17,12 +17,12 @@ class Frame
 
         Frame();
 
-        [[nodiscard]] size_t push(
+        size_t push(
             const std::string& name = {},
             const std::stacktrace& trace = std::stacktrace::current()
         );
         void pop(); //  close latest open scope of caller thread
-        void pop( const size_t id );
+        void close( const size_t id );
         void setThreadName( const std::string& );
 
         [[nodiscard]] const auto& start() const { return start_; }    //  construction

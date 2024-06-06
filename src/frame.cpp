@@ -83,7 +83,7 @@ void Frame::pop()
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Frame::pop( const size_t id )
+void Frame::close( const size_t id )
 {
 #ifdef GLIMMER_DISABLE
     return;

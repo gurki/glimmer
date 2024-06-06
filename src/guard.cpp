@@ -16,7 +16,7 @@ Guard::Guard(
 
 ////////////////////////////////////////////////////////////////////////////////
 Guard::~Guard() {
-    frame.get().pop( scopeId );
+    frame.get().close( scopeId );
 }
 
 
