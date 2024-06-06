@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+#include <expected>
 
 namespace glimmer {
 
 
 class Frame;
 
-void dump( const Frame&, const std::string& filename = {} );
+std::expected<uint64_t, std::string> dump( const Frame&, const std::string& filename = {} );
 
 
 }   //  ::glimmer

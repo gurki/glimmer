@@ -5,62 +5,101 @@
 #include <print>
 #include <regex>
 #include <ranges>
+#include <functional>
 
 namespace glimmer {
 
 
+static const std::regex reSystem( 
+#ifdef _WIN32
+    R"((MSVCP|ntdll|KERNEL32))"
+#else
+    R"((libc|libpthread|libstdc\+\+|libm|libdl|libgcc))" 
+#endif
+);
+
+
+static const std::regex reLibrary( 
+#ifdef _WIN32
+    R"((Microsoft Visual Studio|vctools))" 
+#else
+    R"((/lib/|/usr/lib/|/opt/|/System/Library/))" 
+#endif
+);
+
+
+static const std::regex reFunction( R"((?:.*!)(.*)\+(0x.+))" );
+
+
+static constexpr auto isSystemEntry = []( const std::stacktrace_entry& item ) -> bool {
+    return std::regex_search( item.description(), reSystem );
+};
+
+
+static constexpr auto isLibraryEntry = []( const std::stacktrace_entry& item ) -> bool {
+    return std::regex_search( item.source_file(), reLibrary );
+};
+
+
+static constexpr auto parseFunction = []( const std::string& description ) -> std::string {
+    std::smatch match;
+    std::regex_match( description, match, reFunction );
+#ifdef GLIMMER_INCLUDE_FUNCTION_OFFSET
+    return std::format( "{}+{}", match[1].str(), match[2].str() );
+#else
+    return match[1];
+#endif
+};
+
+
+static constexpr auto parseTrace = (
+#ifndef GLIMMER_INCLUDE_SYSTEM_CALLS
+    std::views::filter( std::not_fn( isSystemEntry ) ) |
+#endif
+#ifndef GLIMMER_INCLUDE_LIBRARY_CALLS
+    std::views::filter( std::not_fn( isLibraryEntry ) ) |
+#endif 
+    std::views::transform( &std::stacktrace_entry::description ) |
+    std::views::reverse
+);
+
+
 ////////////////////////////////////////////////////////////////////////////////
 Collapse Collapse::fromFrame( const Frame& frame )
-{
-    const auto& scopes = frame.scopes();
-    const auto& names = frame.names();
+{ 
+    Collapse collapse {};
+    collapse.start = frame.start();
+    collapse.end = frame.end();
+    collapse.depth = 0;
 
-    Collapse folded {};
-    folded.start = frame.start();
-    folded.end = frame.end();
-    folded.depth = 0;
+    if ( frame.empty() ) {
+        return {};
+    }
 
-    std::unordered_map<std::thread::id, std::vector<std::string> > keys;
-    std::unordered_map<std::thread::id, int> levels;
-
-    for ( const auto& scope : scopes )
+    for ( const auto& scope : frame.scopes() )
     {
         if ( scope.trace.empty() ) {
             continue;
         }
+        
+        std::stringstream sstr;
+        sstr << scope.thread;
+        const uint32_t threadId = std::atoi( sstr.str().c_str() );
 
-        static const std::regex reSystem( R"(MSVCP|ntdll|KERNEL32)" );
-        static const std::regex reLibrary( R"(Microsoft Visual Studio|vctools)" );
+        auto descriptions = scope.trace | parseTrace;
+        std::vector<std::string> callers = { std::format( "{:04x}", threadId ) };
+        std::ranges::transform( descriptions, std::back_inserter( callers ), parseFunction );
 
-        std::vector<std::string> stack = { std::format( "{}", scope.thread ) };
-        auto filtered = (
-            scope.trace |
-            std::views::filter( []( const std::stacktrace_entry& item ) {
-                return ! (
-                    std::regex_search( item.description(), reSystem ) ||
-                    std::regex_search( item.source_file(), reLibrary )
-                );
-            }) |
-            std::views::reverse
-        );
+        if ( ! scope.name.empty() ) {
+            callers.push_back( scope.name );
+        }
 
-        static const std::regex reName( R"((?:.*!)(.*)\+(0x.+))" );
-        // static const std::regex reName( R"((?:.*!)(.*))" );
-        auto descriptions = filtered | std::views::transform( &std::stacktrace_entry::description );
-
-        std::ranges::transform( descriptions, std::back_inserter( stack ), []( const std::string& description ) {
-            std::smatch match;
-            std::regex_match( description, match, reName );
-            // return std::format( "{}+{}", match[1].str(), match[2].str() );
-            return match[1];
-        });
-
-        const std::string key = stack.back();
-        folded.traces.emplace_back( key, std::move( stack ), scope.start, scope.end );
-        folded.depth = std::max( folded.depth, scope.level );
+        auto view = callers | std::views::join_with( ';' );
+        collapse.traces.emplace_back( std::move( callers ), scope.start, scope.end );
+        collapse.depth = std::max( collapse.depth, (int)callers.size() );
     }
 
-    return folded;
+    return collapse;
 }
 
 

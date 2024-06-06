@@ -29,42 +29,26 @@ target_link_libraries( ${PROJECT_NAME}
 
 
 option( GLIMMER_DISABLE "Activate for zero-impact production builds" OFF )
-option( GLIMMER_PREPEND_FUNCTION_TO_NAMED "Prepend current function name to custom named scopes" OFF )
-option( GLIMMER_INCLUDE_RETURN_TYPE "Include return type with name, e.g. `int main`" OFF )
-option( GLIMMER_INCLUDE_SIGNATURE "Include signature with name, e.g. `main(int,char* [])`" OFF )
-option( GLIMMER_INCLUDE_SUFFIXES "Include suffixes with name, e.g. `size() const override`" OFF )
-option( GLIMMER_INCLUDE_ALL "Include all of the above e.g. `double compute(float) override`" OFF )
-
-if ( GLIMMER_PREPEND_FUNCTION_TO_NAMED )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_PREPEND_FUNCTION_TO_NAMED )
-endif()
+option( GLIMMER_INCLUDE_FUNCTION_OFFSET "Add function offset suffix, e.g. `main+0x43`" OFF )
+option( GLIMMER_INCLUDE_SYSTEM_CALLS "Include system calls" OFF )
+option( GLIMMER_INCLUDE_LIBRARY_ENTRIES "Include c/c++ standard library calls" OFF )
+option( GLIMMER_BUILD_EXAMPLES "" ON )
 
 if ( GLIMMER_DISABLE )
     target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_DISABLE )
 endif()
 
-if( GLIMMER_INCLUDE_RETURN_TYPE )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_RETURN_TYPE )
+if( GLIMMER_INCLUDE_FUNCTION_OFFSET )
+    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_FUNCTION_OFFSET )
 endif()
 
-if( GLIMMER_INCLUDE_SIGNATURE )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_SIGNATURE )
+if( GLIMMER_INCLUDE_SYSTEM_CALLS )
+    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_SYSTEM_CALLS )
 endif()
 
-if( GLIMMER_INCLUDE_SUFFIXES )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_SUFFIXES )
+if( GLIMMER_INCLUDE_LIBRARY_ENTRIES )
+    target_compile_definitions( ${PROJECT_NAME} PUBLIC GLIMMER_INCLUDE_LIBRARY_ENTRIES )
 endif()
-
-if( GLIMMER_INCLUDE_ALL )
-    target_compile_definitions( ${PROJECT_NAME} PUBLIC
-        GLIMMER_INCLUDE_RETURN_TYPE
-        GLIMMER_INCLUDE_SIGNATURE
-        GLIMMER_INCLUDE_SUFFIXES
-    )
-endif()
-
-
-option( GLIMMER_BUILD_EXAMPLES "" ON )
 
 if ( GLIMMER_BUILD_EXAMPLES )
     add_subdirectory( examples )

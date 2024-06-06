@@ -52,32 +52,38 @@ void workerE() {
 
 int main( int argc, char* argv[] )
 {
+    //  manual begin & end
     GLIMMER_BEGIN;
 
-    GLIMMER_NBEGIN( "local-scope" );
-    std::this_thread::sleep_for( 1ms );
-    GLIMMER_END;
-
+    //  direct calls
     workerA();
     workerC();
     workerD();
     workerE();
 
+    //  parallel calls
     std::async( workerB ).wait();
-    std::vector< std::future<void> > futures;
-
     std::async( [](){ GLIMMER_GUARD; workerA(); } ).wait();
 
+    //  complex function signatures
+    const auto fn = []( const float x, const int& y ) -> double { 
+        GLIMMER_GUARD; 
+        workerA(); 
+        return -1.0; 
+    };
+
     int val;
-    const auto fn = []( const float x, const int& y ) -> double { GLIMMER_GUARD; workerA(); return -1.0; };
     std::async( [&](){ GLIMMER_GUARD; fn( 0, val ); } ).wait();
+
+    //  fully async calls
+    std::vector< std::future<void> > futures;
 
     for ( int i = 0; i < 10; i++ ) {
         auto futureA = std::async( workerA );
         futures.emplace_back( std::move( futureA ) );
     }
 
-    for ( int i = 0; i < 5; i++ ) {
+    for ( int i = 0; i < 3; i++ ) {
         workerB();
     }
 
@@ -86,5 +92,8 @@ int main( int argc, char* argv[] )
     }
 
     GLIMMER_END;
-    glimmer::dump( GLIMMER, "collapsed.txt" );
+
+    //  convert and write to disk
+    const auto bytes = GLIMMER_NDUMP( "collapsed.txt" );
+    std::println( "wrote {} bytes", bytes.value_or( 0 ) );
 }

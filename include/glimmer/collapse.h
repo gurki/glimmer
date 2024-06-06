@@ -10,7 +10,6 @@ class Frame;
 
 
 struct TimedTrace {
-    std::string name;
     std::vector<std::string> trace;
     std::chrono::system_clock::time_point start;
     std::chrono::system_clock::time_point end;

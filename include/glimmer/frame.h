@@ -29,7 +29,7 @@ class Frame
         const auto& start() const { return start_; }    //  construction
         const auto& end() const { return end_; }        //  last scope end
         const auto& scopes() const { return scopes_; }
-        const auto& names() const { return names_; }
+        const auto& threadNames() const { return threadNames_; }
 
         bool empty() const { return start_ == end_; }
 
@@ -43,7 +43,7 @@ class Frame
         //  thread-protected
         std::mutex mutex_;
         std::unordered_map<std::thread::id, int> levels_;
-        std::unordered_map<std::thread::id, std::string> names_;
+        std::unordered_map<std::thread::id, std::string> threadNames_;
         std::vector<Scope> scopes_;
 
         //  global

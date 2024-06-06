@@ -112,7 +112,7 @@ void Frame::pop( const size_t id )
 void Frame::setThreadName( const std::string& name ) {
     const auto thread = std::this_thread::get_id();
     std::scoped_lock lock( mutex_ );
-    names_[ thread ] = name;
+    threadNames_[ thread ] = name;
 }
 
 
