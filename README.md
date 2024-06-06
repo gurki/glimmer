@@ -1,8 +1,14 @@
 # glimmer 🔥
-A tiny cpp flame graph profiling library
+A tiny cpp23 flame graph profiling library
 
 ![](docs/simple.svg)
 
+
+## Motivation
+- hot profiling, directly in code
+- decide where and what you measure
+- flamegraphs for regression testing as automated CI artifacts
+- personal exploration of the new `std::stacktrace` and other cpp23 features
 
 ## Overview
 - `Frame` - collection of scopes over time
@@ -52,30 +58,12 @@ flamegraph.pl --title simple \
 
 
 ## Options
-
-### GLIMMER_INCLUDE_X
-
-```
-GLIMMER_INCLUDE_RETURN_TYPE
-|                              GLIMMER_INCLUDE_SIGNATURE
-|                              |          GLIMMER_INCLUDE_SUFFIXES
-[float] __cdecl [Object::exec] [(float&)] [const override]          
-```
-
-- `Object::exec`
-- `float Object::exec`
-- `float Object::exec(float&)`
-- `float Object::exec(float&) const override`
-
-Default: `Object::exec(float&)`
-
-### GLIMMER_PREPEND_FUNCTION_TO_NAMED
-
-```
-float compute(void) {
-    GLIMMER_NGUARD( "ScopeWithCustomName" );
-}
-```
-
-- `OFF`: `ScopeWithCustomName`
-- `ON `: `float compute(void)::ScopeWithCustomName`
+- ` GLIMMER_DISABLE` - Allows for zero-overhead production builds
+- ` GLIMMER_INCLUDE_FUNCTION_OFFSET` - Add function offset suffix, e.g. `main+0x43`
+- ` GLIMMER_INCLUDE_SYSTEM_CALLS` - Include system calls
+    - Windows: `MSVCP|ntdll|KERNEL32`
+    - Unix: `libc|libpthread|libstdc++|libm|libdl|libgcc`
+- ` GLIMMER_INCLUDE_LIBRARY_ENTRIES` - Include c/cpp standard library calls
+    - Windows: `Microsoft Visual Studio|vctools`
+    - Unix: /lib/|/usr/lib/|/opt/|/System/Library/`
+- ` GLIMMER_BUILD_EXAMPLES`

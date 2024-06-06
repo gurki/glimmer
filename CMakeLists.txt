@@ -28,7 +28,7 @@ target_link_libraries( ${PROJECT_NAME}
 )
 
 
-option( GLIMMER_DISABLE "Activate for zero-impact production builds" OFF )
+option( GLIMMER_DISABLE "Allows for zero-overhead production builds" OFF )
 option( GLIMMER_INCLUDE_FUNCTION_OFFSET "Add function offset suffix, e.g. `main+0x43`" OFF )
 option( GLIMMER_INCLUDE_SYSTEM_CALLS "Include system calls" OFF )
 option( GLIMMER_INCLUDE_LIBRARY_ENTRIES "Include c/c++ standard library calls" OFF )
