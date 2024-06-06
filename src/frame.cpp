@@ -30,7 +30,6 @@ Frame& Frame::instance()
 ////////////////////////////////////////////////////////////////////////////////
 size_t Frame::push(
     const std::string& name,
-    const std::source_location& source,
     const std::stacktrace& trace )
 {
     const auto timestamp = std::chrono::system_clock::now();
@@ -38,17 +37,11 @@ size_t Frame::push(
 
     Scope scope;
     scope.name = name;
-    scope.source = source;
     scope.trace = trace;
     scope.thread = thread;
     scope.start = timestamp;
 
     std::scoped_lock lock( mutex_ );
-
-    int& level = levels_[ thread ];
-    scope.level = level;
-    level++;
-
     scopes_.emplace_back( std::move( scope ) );
     return scopes_.size() - 1;
 }
@@ -61,11 +54,6 @@ void Frame::pop()
 
     std::scoped_lock lock( mutex_ );
 
-    //  OPTIM:
-    //    use std::stack<std::thread::id, int> to keep track of current
-    //    top-level scope and access in O(1) instead of linear search.
-    //    additionally minimize lock duration.
-
     const auto rng = std::ranges::find_last_if( scopes_, [ thread ]( const Scope& scope ) {
         return scope.thread == thread && ! scope.closed;
     });
@@ -73,8 +61,6 @@ void Frame::pop()
     if ( rng.empty() ) {
         return;
     }
-
-    levels_[ thread ]--;
 
     auto& scope = *rng.begin();
     scope.closed = true;
@@ -99,8 +85,6 @@ void Frame::pop( const size_t id )
     if ( scope.closed ) {
         return;
     }
-
-    levels_[ thread ]--;
 
     scope.closed = true;
     scope.end = std::chrono::system_clock::now();

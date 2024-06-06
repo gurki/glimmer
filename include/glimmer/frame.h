@@ -19,10 +19,9 @@ class Frame
 
         size_t push(
             const std::string& name = {},
-            const std::source_location& source = std::source_location::current(),
             const std::stacktrace& trace = std::stacktrace::current()
         );
-        void pop();
+        void pop(); //  close latest open scope of caller thread
         void pop( const size_t id );
         void setThreadName( const std::string& );
 
@@ -42,9 +41,8 @@ class Frame
 
         //  thread-protected
         std::mutex mutex_;
-        std::unordered_map<std::thread::id, int> levels_;
-        std::unordered_map<std::thread::id, std::string> threadNames_;
         std::vector<Scope> scopes_;
+        std::unordered_map<std::thread::id, std::string> threadNames_;
 
         //  global
         static std::unique_ptr<Frame> instance_;
