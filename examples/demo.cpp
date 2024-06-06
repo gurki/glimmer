@@ -94,6 +94,6 @@ int main( int argc, char* argv[] )
     GLIMMER_END;
 
     //  convert and write to disk
-    const auto bytes = GLIMMER_NDUMP( "collapsed.txt" );
+    const auto bytes = GLIMMER_NDUMP( "demo.txt" );
     std::println( "wrote {} bytes", bytes.value_or( 0 ) );
 }

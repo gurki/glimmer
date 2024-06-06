@@ -2,17 +2,17 @@
 #include <future>
 
 void worker() {
-    GLIMMER_GUARD;
+    GLIMMER_GUARD;  //  automatic capture of function entry and exit
     std::this_thread::sleep_for( std::chrono::milliseconds( 10 ) );
 }
 
 int main( int argc, char* argv[] ) 
 {
-    GLIMMER_BEGIN;
+    GLIMMER_BEGIN;  //  manual scope
 
-    worker();
-    std::async( worker ).wait();
-
-    GLIMMER_END;
-    GLIMMER_DUMP;
+    worker();       //  sync call
+    std::async( worker ).wait();    //  async call   
+                    
+    GLIMMER_END;    //  automatic close of latest active
+    GLIMMER_DUMP;   //  write folded stack collapse to disk
 }

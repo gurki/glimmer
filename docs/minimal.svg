@@ -430,28 +430,28 @@
 <text id="matched" x="370.00" y="117" > </text>
 <g id="frames">
 <g >
-<title>all (56,862 ms, 100%)</title><rect x="10.0" y="36" width="460.0" height="15.0" fill="rgb(255,130,130)" rx="2" ry="2" />
-<text  x="13.00" y="46.5" ></text>
+<title>worker (15,857 us, 20.28%)</title><rect x="376.7" y="68" width="93.3" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
+<text  x="379.73" y="78.5" >worker</text>
 </g>
 <g >
-<title>5574 (15,797 ms, 27.78%)</title><rect x="342.2" y="52" width="127.8" height="15.0" fill="rgb(233,98,98)" rx="2" ry="2" />
-<text  x="345.21" y="62.5" >5574</text>
-</g>
-<g >
-<title>main (41,065 ms, 72.22%)</title><rect x="10.0" y="68" width="332.2" height="15.0" fill="rgb(219,79,79)" rx="2" ry="2" />
+<title>main (62,351 us, 79.72%)</title><rect x="10.0" y="68" width="366.7" height="15.0" fill="rgb(219,79,79)" rx="2" ry="2" />
 <text  x="13.00" y="78.5" >main</text>
 </g>
 <g >
-<title>worker (12,489 ms, 21.96%)</title><rect x="241.2" y="84" width="101.0" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
-<text  x="244.17" y="94.5" >worker</text>
+<title>0aa4 (62,351 us, 79.72%)</title><rect x="10.0" y="52" width="366.7" height="15.0" fill="rgb(228,90,90)" rx="2" ry="2" />
+<text  x="13.00" y="62.5" >0aa4</text>
 </g>
 <g >
-<title>worker (15,797 ms, 27.78%)</title><rect x="342.2" y="68" width="127.8" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
-<text  x="345.21" y="78.5" >worker</text>
+<title>worker (23,121 us, 29.56%)</title><rect x="240.7" y="84" width="136.0" height="15.0" fill="rgb(231,96,96)" rx="2" ry="2" />
+<text  x="243.74" y="94.5" >worker</text>
 </g>
 <g >
-<title>39e0 (41,065 ms, 72.22%)</title><rect x="10.0" y="52" width="332.2" height="15.0" fill="rgb(246,118,118)" rx="2" ry="2" />
-<text  x="13.00" y="62.5" >39e0</text>
+<title>all (78,208 us, 100%)</title><rect x="10.0" y="36" width="460.0" height="15.0" fill="rgb(255,130,130)" rx="2" ry="2" />
+<text  x="13.00" y="46.5" ></text>
+</g>
+<g >
+<title>2870 (15,857 us, 20.28%)</title><rect x="376.7" y="52" width="93.3" height="15.0" fill="rgb(248,120,120)" rx="2" ry="2" />
+<text  x="379.73" y="62.5" >2870</text>
 </g>
 </g>
 </svg>
