@@ -13,6 +13,21 @@ namespace glimmer {
 
 
 ////////////////////////////////////////////////////////////////////////////////
+auto fold( const TimedTrace& trace ) 
+{
+    const auto duration = trace.end - trace.start;
+    const auto durationUs = std::chrono::duration_cast<std::chrono::microseconds>( duration );
+
+    auto callers = trace.callers | std::views::join_with( ';' );
+
+    return std::format( "{} {}\n", 
+        std::string( callers.begin(), callers.end() ), 
+        durationUs.count() 
+    );
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
 std::expected<uint64_t, std::string> dump( 
     const Frame& frame,
     const std::string& filename )
@@ -42,19 +57,10 @@ std::expected<uint64_t, std::string> dump(
 
     const auto collapse = Collapse::fromFrame( frame );
 
-    for ( const auto& item : collapse.traces )
-    {
-        const auto duration = item.end - item.start;
-        const auto durationUs = std::chrono::duration_cast<std::chrono::microseconds>( duration );
-
-        auto fold = item.trace | std::views::join_with( ';' );
-
-        const std::string line = std::format( "{} {}\n", 
-            std::string( fold.begin(), fold.end() ), 
-            durationUs.count() 
-        );
-
-        fout.write( line.c_str(), line.size() );
+    for ( const auto& trace : collapse.traces ) {
+        //  manual write to force LF line endings
+        const std::string line = fold( trace );
+        fout.write( line.c_str(), line.size() );    
     }
 
     const auto bytes = (uint64_t)fout.tellp();
