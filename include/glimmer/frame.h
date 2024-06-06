@@ -17,7 +17,7 @@ class Frame
 
         Frame();
 
-        size_t push(
+        [[nodiscard]] size_t push(
             const std::string& name = {},
             const std::stacktrace& trace = std::stacktrace::current()
         );
@@ -25,12 +25,12 @@ class Frame
         void pop( const size_t id );
         void setThreadName( const std::string& );
 
-        const auto& start() const { return start_; }    //  construction
-        const auto& end() const { return end_; }        //  last scope end
-        const auto& scopes() const { return scopes_; }
-        const auto& threadNames() const { return threadNames_; }
+        [[nodiscard]] const auto& start() const { return start_; }    //  construction
+        [[nodiscard]] const auto& end() const { return end_; }        //  last scope end
+        [[nodiscard]] const auto& scopes() const { return scopes_; }
+        [[nodiscard]] const auto& threadNames() const { return threadNames_; }
 
-        bool empty() const { return start_ == end_; }
+        [[nodiscard]] bool empty() const { return start_ == end_; }
 
         static Frame& instance();
 

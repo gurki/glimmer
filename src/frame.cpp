@@ -10,7 +10,12 @@ std::unique_ptr<Frame> Frame::instance_ = nullptr;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-Frame::Frame() {
+Frame::Frame() 
+{
+#ifdef GLIMMER_DISABLE
+    return;
+#endif
+
     start_  = std::chrono::system_clock::now();
     end_ = start_;
 }
@@ -32,6 +37,10 @@ size_t Frame::push(
     const std::string& name,
     const std::stacktrace& trace )
 {
+#ifdef GLIMMER_DISABLE
+    return {};
+#endif
+
     const auto timestamp = std::chrono::system_clock::now();
     const auto thread = std::this_thread::get_id();
 
@@ -50,6 +59,10 @@ size_t Frame::push(
 ////////////////////////////////////////////////////////////////////////////////
 void Frame::pop()
 {
+#ifdef GLIMMER_DISABLE
+    return;
+#endif
+
     const auto thread = std::this_thread::get_id();
 
     std::scoped_lock lock( mutex_ );
@@ -72,6 +85,10 @@ void Frame::pop()
 ////////////////////////////////////////////////////////////////////////////////
 void Frame::pop( const size_t id )
 {
+#ifdef GLIMMER_DISABLE
+    return;
+#endif
+
     const auto thread = std::this_thread::get_id();
 
     std::scoped_lock lock( mutex_ );
@@ -93,7 +110,12 @@ void Frame::pop( const size_t id )
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void Frame::setThreadName( const std::string& name ) {
+void Frame::setThreadName( const std::string& name ) 
+{
+#ifdef GLIMMER_DISABLE
+    return;
+#endif
+
     const auto thread = std::this_thread::get_id();
     std::scoped_lock lock( mutex_ );
     threadNames_[ thread ] = name;

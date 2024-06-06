@@ -32,6 +32,10 @@ std::expected<uint64_t, std::string> dump(
     const Frame& frame,
     const std::string& filename )
 {
+#ifdef GLIMMER_DISABLE
+    return std::unexpected( "glimmer disabled" );
+#endif
+
     if ( frame.empty() ) {
         return std::unexpected( "empty frame" );
     }

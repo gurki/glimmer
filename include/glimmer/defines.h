@@ -17,7 +17,7 @@
     #define GLIMMER_GUARD
     #define GLIMMER_DUMP
 
-    #define GLIMMER_NBEGIN
-    #define GLIMMER_NGUARD
-    #define GLIMMER_NDUMP
+    #define GLIMMER_NBEGIN(...)
+    #define GLIMMER_NGUARD(...)
+    #define GLIMMER_NDUMP(...)
 #endif

@@ -67,6 +67,10 @@ static constexpr auto parseTrace = (
 ////////////////////////////////////////////////////////////////////////////////
 Collapse Collapse::fromFrame( const Frame& frame )
 { 
+#ifdef GLIMMER_DISABLE
+    return {};
+#endif
+
     Collapse collapse {};
     collapse.start = frame.start();
     collapse.end = frame.end();
